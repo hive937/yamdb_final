@@ -10,7 +10,6 @@ from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from reviews.models import Category, Genre, Review, Title, CustomUser
 from .permissions import (
     AdminPermission,
@@ -29,6 +28,7 @@ from .serializers import (
     TitlePostPatchSerializer,
     TitleSerializer,
 )
+
 from .filters import TitlesFilter
 
 
