@@ -1,49 +1,45 @@
-# **Проект YaMDb**
+![example event parameter](https://github.com/hive937/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg?event=push)
+# **Проект Infra_sp2**
 ## **Описание**
-Проект YaMDb собирает отзывы пользователей на произведения (Titles).
-Произведения делятся на категории (Category): «Книги», «Фильмы», «Музыка». Сами произведения в YaMDb не хранятся: нельзя посмотреть фильм или послушать музыку. Произведению может быть присвоен жанр (Genre) из списка предустановленных (например «Сказка», «Рок» или «Артхаус»). Новые произведения может добавлять только администратор, он же может расширять список категорий и жанров. 
-Пользователи оставляют к произведениям текстовые отзывы (Review) и ставят оценку в диапазоне от одного до десяти (целое число); из оценок формируется усреднённая оценка — рейтинг. На одно произведение пользователь может оставить только один отзыв.
+Проект Infra_sp2 позволяет упаковать и запустить ранее созданный проект api_yamdb через создание образа и упаковку его в контейнер.
 ## **Как запустить проект**
 Клонировать репозиторий и перейти в него в командной строке:
 ```
-git clone https://github.com/jeniavoropay/api_yamdb
+git clone https://github.com/hive937/infra_sp2
 ```
 ```
-cd api_yamdb/
+cd infra_sp2/infra
 ```
-Cоздать и активировать виртуальное окружение:
+Выполнить команду для запуска контейнера
 ```
-python3 -m venv env
+docker-compose up -d --build
 ```
+## **Заполнение базы данными**
+Для того, чтобы заполнить базу данными, необходимо выполнить следующие команды в командной строке, находясь в той же директории, что и при запуске:
+Сделать миграции:
 ```
-source env/bin/activate
+docker-compose exec web python manage.py migrate
 ```
-Установить зависимости из файла requirements.txt:
+Создать суперпользователя:
 ```
-python3 -m pip install --upgrade pip
+docker-compose exec web python manage.py createsuperuser
 ```
+Собрать статику:
 ```
-pip install -r requirements.txt
+docker-compose exec web python manage.py collectstatic --no-input
 ```
-Выполнить миграции:
-```
-python3 manage.py migrate
-```
-Загрузить в базу данные из CSV-файлов:
-```
-python manage.py upload users.csv genre.csv category.csv titles.csv genre_title.csv review.csv comments.csv 
-```
-Запустить проект:
-```
-python3 manage.py runserver
-```
-## **Документация**
-Доступна после запуска сервера: [Redoc](http://127.0.0.1:8000/redoc/).
+## **Наполнение env-файла**
+DB_ENGINE=django.db.backends.postgresql # указываем, что работаем с postgresql
+DB_NAME=postgres # имя базы данных
+POSTGRES_USER=postgres # логин для подключения к базе данных
+POSTGRES_PASSWORD=postgres # пароль для подключения к БД
+DB_HOST=db # название сервиса (контейнера)
+DB_PORT=5432 # порт для подключения к БД 
+SECRET_KEY= # секретный токен
 ### Технологии
 - Python 3.9
 - Django 2.2.16
 - Django Rest Framework 3.12.4
+- Docker 23.0.0
 ### Авторы
-- Евгения Воропай | [jeniavoropay](https://github.com/jeniavoropay)
-- Владимир Васильев | [chem1sto](https://github.com/chem1sto)
 - Павел Вервейн | [hive937](https://github.com/hive937)
