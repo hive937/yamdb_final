@@ -2,7 +2,7 @@ FROM python:3.7-slim
 
 RUN mkdir /app
 
-WORKDIT /app
+WORKDIR /app
 
 COPY requirements.txt .
 
