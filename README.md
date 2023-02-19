@@ -41,5 +41,7 @@ SECRET_KEY= # секретный токен
 - Django 2.2.16
 - Django Rest Framework 3.12.4
 - Docker 23.0.0
+### Ссылка на развёрнутый проект
+https://158.160.26.229:5000
 ### Авторы
 - Павел Вервейн | [hive937](https://github.com/hive937)
